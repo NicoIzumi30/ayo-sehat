@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DailyRecord extends Model
 {
-  protected $fillable = ['user_id', 'tanggal', 'berat_badan', 'lingkar_pinggang', 'langkah_kaki', 'catatan'];
+  protected $fillable = ['user_id', 'tanggal', 'berat_badan', 'lingkar_pinggang', 'langkah_kaki', 'catatan', 'foto_badan'];
   protected $casts = ['tanggal' => 'date', 'berat_badan' => 'decimal:1', 'lingkar_pinggang' => 'decimal:1'];
 
   public function user()

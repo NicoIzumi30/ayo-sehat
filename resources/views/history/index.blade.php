@@ -108,8 +108,17 @@
 
           {{-- Lingkar Pinggang --}}
           @if($record->lingkar_pinggang)
-            <div class="text-xs text-textmuted">Lingkar Pinggang: <span
-                class="font-bold text-textmain">{{ $record->lingkar_pinggang }} cm</span></div>
+            <div class="flex justify-between items-center text-xs text-textmuted bg-white p-3 rounded-xl border border-chartbg/50">
+              <span>Lingkar Pinggang:</span> <span class="font-bold text-textmain">{{ $record->lingkar_pinggang }} cm</span>
+            </div>
+          @endif
+
+          {{-- Foto Badan --}}
+          @if($record->foto_badan)
+            <div>
+              <h4 class="text-xs font-bold text-textmuted uppercase tracking-wider mb-2">📸 Foto Badan</h4>
+              <img src="{{ asset('storage/' . $record->foto_badan) }}" alt="Foto Badan {{ $record->tanggal->format('d M') }}" class="w-full h-auto max-h-48 object-cover rounded-xl border border-chartbg shadow-sm">
+            </div>
           @endif
         </div>
       </div>

@@ -13,13 +13,13 @@
       @endif
     </header>
 
-    <form action="{{ route('record.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route('record.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
       @csrf
 
       {{-- Body Metrics --}}
       <div class="bg-cardbg rounded-2xl border border-chartbg/50 p-6 shadow-sm relative overflow-hidden">
         <img src="{{ asset('images/login.png') }}" alt="Watermark"
-          class="absolute bottom-[-20px] right-[-20px] w-36 h-36 opacity-50 pointer-events-none rotate-6"
+          class="absolute bottom-[-10px] right-[-20px] w-36 h-36 opacity-50 pointer-events-none rotate-6"
           onerror="this.style.display='none'">
         <div class="relative z-10">
           <h2 class="text-sm font-bold text-textmuted uppercase tracking-wider mb-6 flex items-center">
@@ -49,6 +49,76 @@
               <input type="number" id="langkah_kaki" name="langkah_kaki" placeholder="ex: 6500"
                 value="{{ old('langkah_kaki', $existingRecord->langkah_kaki ?? '') }}"
                 class="w-full bg-appbg border border-chartbg/80 rounded-xl px-4 py-3 text-textmain font-bold focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder:text-chartbg placeholder:font-normal">
+            </div>
+
+            <div class="mt-5 border-t border-chartbg/50 pt-5 md:col-span-3">
+              <label class="block text-xs font-bold text-textmuted mb-4 flex items-center justify-between">
+                <span>Foto Badan</span>
+                @if($existingRecord && $existingRecord->foto_badan)
+                  <span class="text-accent bg-pastelorange px-2 py-0.5 rounded-md">Foto Tersimpan</span>
+                @endif
+              </label>
+
+              <div class="relative group cursor-pointer">
+                <input type="file" id="foto_badan" name="foto_badan" accept="image/*"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewImage(event)">
+                <div
+                  class="w-full h-48 sm:h-64 border-2 opacity-50 border-dashed border-chartbg/80 rounded-2xl bg-appbg flex flex-col items-center justify-center text-textmuted group-hover:bg-pastelorange/30 group-hover:border-accent transition-all overflow-hidden relative shadow-inner">
+
+                  @if($existingRecord && $existingRecord->foto_badan)
+                    <img id="image-preview" src="{{ asset('storage/' . $existingRecord->foto_badan) }}" alt="Preview"
+                      class="absolute inset-0 w-full h-full object-cover">
+                    <div id="upload-overlay"
+                      class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300">
+                      <div
+                        class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-2">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                          </path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-white text-sm font-bold">Ganti Foto</span>
+                    </div>
+                  @else
+                    <img id="image-preview" src="#" alt="Preview"
+                      class="absolute inset-0 w-full h-full object-cover hidden">
+                    <div id="upload-prompt" class="flex flex-col items-center justify-center transition-all duration-300">
+                      <div
+                        class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-all">
+                        <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                          </path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm font-bold text-textmain group-hover:text-accent transition-colors">Tap untuk
+                        mengupload foto</span>
+                      <span class="text-xs font-medium text-textmuted mt-1">PNG, JPG, WEBP (Max 5MB)</span>
+                    </div>
+
+                    <div id="upload-overlay"
+                      class="absolute inset-0 bg-black/40 opacity-0 flex flex-col items-center justify-center transition-all duration-300 hidden">
+                      <div
+                        class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-2">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                          </path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-white text-sm font-bold">Ganti Foto</span>
+                    </div>
+                  @endif
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -128,6 +198,30 @@
       let val = parseInt(input.value) || 0;
       val = Math.max(0, val + delta);
       input.value = val;
+    }
+
+    function previewImage(event) {
+      const reader = new FileReader();
+      const imageField = document.getElementById('image-preview');
+      const promptField = document.getElementById('upload-prompt');
+      const overlayField = document.getElementById('upload-overlay');
+
+      reader.onload = function () {
+        if (reader.readyState === 2) {
+          imageField.src = reader.result;
+          imageField.classList.remove('hidden');
+          if (promptField) promptField.classList.add('hidden');
+
+          if (overlayField) {
+            overlayField.classList.remove('hidden');
+            overlayField.classList.add('group-hover:opacity-100');
+          }
+        }
+      }
+
+      if (event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   </script>
 @endsection

@@ -48,6 +48,7 @@ class RecordController extends Controller
       'berat_badan' => 'nullable|numeric|min:30|max:300',
       'lingkar_pinggang' => 'nullable|numeric|min:30|max:200',
       'langkah_kaki' => 'nullable|integer|min:0|max:100000',
+      'foto_badan' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
     ]);
 
     // Create or update daily record
@@ -59,6 +60,15 @@ class RecordController extends Controller
         'langkah_kaki' => $request->langkah_kaki,
       ]
     );
+
+    // Handle foto_badan upload
+    if ($request->hasFile('foto_badan')) {
+      if ($record->foto_badan && \Illuminate\Support\Facades\Storage::disk('public')->exists($record->foto_badan)) {
+        \Illuminate\Support\Facades\Storage::disk('public')->delete($record->foto_badan);
+      }
+      $path = $request->file('foto_badan')->store('foto_badan', 'public');
+      $record->update(['foto_badan' => $path]);
+    }
 
     // Auto-set user's berat_awal and tanggal_mulai_diet on first record
     if (!$user->berat_awal && $request->berat_badan) {

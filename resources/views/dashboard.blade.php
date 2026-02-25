@@ -66,6 +66,17 @@
       </div>
     </div>
 
+    {{-- Body Photo --}}
+    @if($todayRecord && $todayRecord->foto_badan)
+      <div class="bg-cardbg rounded-2xl border border-chartbg/50 p-5 shadow-sm">
+        <h3 class="text-sm font-bold text-textmuted uppercase tracking-wider mb-3">📸 Foto Badan Hari Ini</h3>
+        <div class="rounded-xl overflow-hidden border border-chartbg/80 relative">
+          <img src="{{ asset('storage/' . $todayRecord->foto_badan) }}" alt="Foto Badan"
+            class="w-full h-auto object-cover max-h-64">
+        </div>
+      </div>
+    @endif
+
     {{-- Diet Habits --}}
     <div
       class="bg-gradient-to-br from-pastelrose/50 to-pastelorange/20 rounded-2xl border border-chartbg/50 p-6 shadow-sm relative overflow-hidden">
