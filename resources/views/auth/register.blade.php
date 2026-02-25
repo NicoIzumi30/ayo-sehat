@@ -27,7 +27,7 @@
   <div class="w-full max-w-md bg-cardbg rounded-3xl shadow-sm border border-chartbg/50 p-8 sm:p-10 relative z-10">
     <div class="text-center mb-8">
       <div class="w-28 h-28 mx-auto mb-5 flex items-center justify-center">
-        <img src="{{ asset('images/signup.png') }}" alt="Signup" onerror="this.style.display='none'">
+        <img src="{{ asset('images/hello.png') }}" alt="Signup" onerror="this.style.display='none'">
       </div>
       <h1 class="text-2xl font-bold text-textmain tracking-tight mb-2">Buat Akun Baru</h1>
       <p class="text-sm font-medium text-textmuted">Mulai perjalanan sehatmu sekarang!</p>
