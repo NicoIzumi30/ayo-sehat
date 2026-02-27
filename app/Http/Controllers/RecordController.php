@@ -7,6 +7,7 @@ use App\Models\DailyWorkout;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ImageService;
 
 class RecordController extends Controller
 {
@@ -66,7 +67,7 @@ class RecordController extends Controller
       if ($record->foto_badan && \Illuminate\Support\Facades\Storage::disk('public')->exists($record->foto_badan)) {
         \Illuminate\Support\Facades\Storage::disk('public')->delete($record->foto_badan);
       }
-      $path = $request->file('foto_badan')->store('foto_badan', 'public');
+      $path = ImageService::compressAndStore($request->file('foto_badan'), 'foto_badan', 200);
       $record->update(['foto_badan' => $path]);
     }
 

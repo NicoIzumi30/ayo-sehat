@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalorieController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProfileController;
@@ -37,4 +38,16 @@ Route::middleware('auth')->group(function () {
   // Profile
   Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
   Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+  // Calorie Analysis
+  Route::get('/calorie', [CalorieController::class, 'index'])->name('calorie.index');
+  Route::get('/calorie/manual', [CalorieController::class, 'createManual'])->name('calorie.manual');
+  Route::post('/calorie/manual', [CalorieController::class, 'storeManual'])->name('calorie.storeManual');
+  Route::get('/calorie/photo', [CalorieController::class, 'createPhoto'])->name('calorie.photo');
+  Route::post('/calorie/photo', [CalorieController::class, 'analyzePhoto'])->name('calorie.analyzePhoto');
+  Route::get('/calorie/{id}/review', [CalorieController::class, 'review'])->name('calorie.review');
+  Route::post('/calorie/{id}/review', [CalorieController::class, 'updateReview'])->name('calorie.updateReview');
+  Route::post('/calorie/{id}/analyze', [CalorieController::class, 'analyzeCalories'])->name('calorie.analyze');
+  Route::get('/calorie/{id}/result', [CalorieController::class, 'result'])->name('calorie.result');
+  Route::delete('/calorie/{id}', [CalorieController::class, 'destroy'])->name('calorie.destroy');
 });

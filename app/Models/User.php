@@ -55,6 +55,11 @@ class User extends Authenticatable
     return $this->hasMany(DailyRecord::class);
   }
 
+  public function mealLogs()
+  {
+    return $this->hasMany(MealLog::class);
+  }
+
   public function getDisplayNameAttribute(): string
   {
     return $this->nama_lengkap ?: $this->name;

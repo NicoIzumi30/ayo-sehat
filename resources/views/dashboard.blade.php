@@ -66,6 +66,31 @@
       </div>
     </div>
 
+    {{-- Calorie Intake --}}
+    <a href="{{ route('calorie.index') }}"
+      class="block bg-gradient-to-br from-accent/10 to-pastelorange/40 rounded-2xl border border-accent/20 p-5 shadow-sm hover:shadow-md transition-all group">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold text-textmuted uppercase tracking-wider mb-1">🔥 Asupan Kalori</h3>
+          <div class="flex items-baseline gap-1">
+            <span class="text-3xl font-black text-textmain">{{ number_format($todayCalories, 0) }}</span>
+            <span class="text-sm text-textmuted font-medium">kcal</span>
+          </div>
+          <p class="text-xs text-textmuted mt-1">{{ $todayMealCount }} makanan dicatat hari ini</p>
+        </div>
+        <div
+          class="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z">
+            </path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path>
+          </svg>
+        </div>
+      </div>
+    </a>
+
     {{-- Body Photo --}}
     @if($todayRecord && $todayRecord->foto_badan)
       <div class="bg-cardbg rounded-2xl border border-chartbg/50 p-5 shadow-sm">
@@ -165,5 +190,41 @@
         </div>
       </div>
     @endif
+
+    {{-- Quick Menu (mobile only) --}}
+    <div class="md:hidden">
+      <h2 class="text-sm font-bold text-textmuted uppercase tracking-wider mb-3">Menu Lainnya</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <a href="{{ route('target') }}"
+          class="bg-cardbg rounded-2xl border border-chartbg/50 p-4 shadow-sm flex items-center gap-3 hover:border-accent/30 transition-all">
+          <div class="w-10 h-10 bg-pastelyellow/50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6">
+              </path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-textmain">Targets</p>
+            <p class="text-[10px] text-textmuted">Atur target diet</p>
+          </div>
+        </a>
+        <a href="{{ route('profile') }}"
+          class="bg-cardbg rounded-2xl border border-chartbg/50 p-4 shadow-sm flex items-center gap-3 hover:border-accent/30 transition-all">
+          <div class="w-10 h-10 bg-pastelrose/50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+              </path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+              </path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-textmain">Pengaturan</p>
+            <p class="text-[10px] text-textmuted">Profil & akun</p>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 @endsection

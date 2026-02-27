@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyRecord;
 use App\Models\DailyHabit;
 use App\Models\DailyWorkout;
+use App\Models\MealLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,16 @@ class DashboardController extends Controller
     // Calculate streak
     $streak = $this->calculateStreak($user->id);
 
+    // Today's calorie intake
+    $todayCalories = MealLog::where('user_id', $user->id)
+      ->where('tanggal', $today)
+      ->where('status', 'confirmed')
+      ->sum('total_kalori');
+    $todayMealCount = MealLog::where('user_id', $user->id)
+      ->where('tanggal', $today)
+      ->where('status', 'confirmed')
+      ->count();
+
     return view('dashboard', compact(
       'user',
       'today',
@@ -63,7 +74,9 @@ class DashboardController extends Controller
       'workoutsToday',
       'targetWorkouts',
       'weightTrend',
-      'streak'
+      'streak',
+      'todayCalories',
+      'todayMealCount'
     ));
   }
 
